@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/brand")
 public class BrandController {
 
-    @Reference//注入远程zookeeper对象
+    @Reference(timeout = 100000)//注入远程zookeeper对象
     private BrandService brandService;
 
     @RequestMapping("/findAll")
