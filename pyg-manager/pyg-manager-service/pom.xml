@@ -57,6 +57,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
+            <exclusions>
+                <!-- 新dubbo引入，若不排除，tomcat7插件启动会报错，原因是这个jar冲突 -->
+                <exclusion>
+                    <artifactId>javax.servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
