@@ -4,8 +4,60 @@
     <meta charset="UTF-8">
     <title>angularJS入门</title>
     <script type="text/javascript" src="./plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module("pyg", []);
+        app.controller("helloController", function ($scope) {
+            $scope.greeting = "Hello,anjularJS";
+            $scope.greeting1 = [
+                {name:"张三",age:17},
+                {name:"李四",age:18},
+                {name:"王五",age:19},
+                {name:"赵麻子",age:15},
+            ];
+            $scope.greeting2 = [
+                2,3,4,5
+            ];
+        });
+        app.controller("divController", function ($scope) {
+            $scope.greeting2 = [
+                7,8,9,10
+            ];
+        });
+        app.controller("functionController", function ($scope) {
+            $scope.add = function () {
+                $scope.z = parseInt($scope.x) + parseInt($scope.y);
+            }
+        });
+    </script>
 </head>
-<body ng-app>
+<body ng-app="pyg" ng-controller="helloController">
     <h1>获取值表达式：{{100+100}}</h1>
+    <h1>{{greeting}}</h1>
+    <table border="1px">
+        <tr ng-repeat="entity in greeting1">
+            <td>{{entity.name}}</td>
+            <td>{{entity.age}}</td>
+        </tr>
+    </table>
+    <table border="1px">
+        <tr ng-repeat="x in greeting2">
+            <td>{{x}}</td>
+        </tr>
+    </table>
+    <div ng-controller="divController">
+        <br>
+        <table border="1px">
+            <tr ng-repeat="x in greeting2">
+                <td>{{x}}</td>
+            </tr>
+        </table>
+    </div>
+    <div ng-controller="functionController">
+        <br>
+        X:<input type="text" ng-model="x" ng-init="x=1">
+        Y:<input type="text" ng-model="y" ng-init="y=2">
+        <button ng-click="add()">计算</button>
+        计算{{x}} + {{y}} = {{z}}
+    </div>
 </body>
 </html>
