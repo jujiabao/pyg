@@ -95,4 +95,11 @@ public class BrandServiceImpl implements BrandService {
         PageInfo<TbBrand> pageInfo = new PageInfo<>(list);
         return new PageResult(pageInfo.getTotal(), list);
     }
+
+    @Override
+    public void delete(Long[] ids) {
+        for (long id : ids) {
+            brandMapper.deleteByPrimaryKey(id);
+        }
+    }
 }

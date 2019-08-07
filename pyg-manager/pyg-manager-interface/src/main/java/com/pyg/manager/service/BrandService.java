@@ -36,4 +36,10 @@ public interface BrandService {
      * @return
      */
     PageResult findBrandByPage(TbBrand tbBrand, Integer page, Integer rows);
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    public void delete(Long[] ids);
 }

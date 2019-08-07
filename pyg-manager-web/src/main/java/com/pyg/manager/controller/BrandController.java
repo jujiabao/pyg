@@ -89,4 +89,14 @@ public class BrandController {
                              @RequestParam(defaultValue = "10") Integer rows) {
         return brandService.findBrandByPage(tbBrand, page, rows);
     }
+
+    @RequestMapping("/delete")
+    public PygResult delete(Long[] ids) {
+        try {
+            brandService.delete(ids);
+            return new PygResult(true, "删除成功");
+        } catch (Exception e) {
+            return new PygResult(false, "删除失败");
+        }
+    }
 }
