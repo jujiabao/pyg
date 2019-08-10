@@ -55,7 +55,7 @@
     </dependencies>
 
     <!-- idea的mybatis自动生成 -->
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
@@ -83,5 +83,5 @@
                 </dependencies>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 </project>

@@ -5,6 +5,7 @@ import com.pyg.utils.PageResult;
 import com.pyg.utils.PygResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Title BrandService
@@ -42,4 +43,10 @@ public interface BrandService {
      * @param ids
      */
     public void delete(Long[] ids);
+
+    /**
+     * 返回下拉列表数据
+     * @return
+     */
+    public List<Map> selectOptionList();
 }

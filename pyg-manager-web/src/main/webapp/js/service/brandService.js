@@ -27,5 +27,9 @@ app.service("brandService", function ($http) {
     this.search = function(page, rows, searchEntity) {
         return $http.post("../brand/search?page="+page+"&rows="+rows, searchEntity)
     }
+    
+    this.selectOptionList = function () {
+        return $http.post("../brand/selectOptionList");
+    }
 
 });

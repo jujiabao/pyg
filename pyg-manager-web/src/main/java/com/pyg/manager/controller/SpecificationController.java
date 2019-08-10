@@ -1,6 +1,8 @@
 package com.pyg.manager.controller;
 import java.util.List;
+import java.util.Map;
 
+import com.pyg.pojogroup.Specification;
 import com.pyg.utils.PageResult;
 import com.pyg.utils.PygResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +49,7 @@ public class SpecificationController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public PygResult add(@RequestBody TbSpecification specification){
+	public PygResult add(@RequestBody Specification specification){
 		try {
 			specificationService.add(specification);
 			return new PygResult(true, "增加成功");
@@ -63,7 +65,7 @@ public class SpecificationController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public PygResult update(@RequestBody TbSpecification specification){
+	public PygResult update(@RequestBody Specification specification){
 		try {
 			specificationService.update(specification);
 			return new PygResult(true, "修改成功");
@@ -79,7 +81,7 @@ public class SpecificationController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public TbSpecification findOne(Long id){
+	public Specification findOne(Long id){
 		return specificationService.findOne(id);		
 	}
 	
@@ -98,17 +100,27 @@ public class SpecificationController {
 			return new PygResult(false, "删除失败");
 		}
 	}
-	
-		/**
+
+	/**
 	 * 查询+分页
+	 *
 	 * @param
 	 * @param page
 	 * @param rows
 	 * @return
 	 */
 	@RequestMapping("/search")
-	public PageResult search(@RequestBody TbSpecification specification, int page, int rows  ){
-		return specificationService.findPage(specification, page, rows);		
+	public PageResult search(@RequestBody TbSpecification specification, int page, int rows) {
+		return specificationService.findPage(specification, page, rows);
 	}
-	
+
+	/**
+	 * 规格下拉选项卡
+	 * @return
+	 */
+	@RequestMapping("/selectOptionList")
+	public List<Map> selectOptionList() {
+		return specificationService.selectOptionList();
+	}
+
 }

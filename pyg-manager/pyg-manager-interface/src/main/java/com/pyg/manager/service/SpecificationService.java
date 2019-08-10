@@ -1,6 +1,9 @@
 package com.pyg.manager.service;
 import java.util.List;
+import java.util.Map;
+
 import com.pyg.pojo.TbSpecification;
+import com.pyg.pojogroup.Specification;
 import com.pyg.utils.PageResult;
 
 /**
@@ -27,13 +30,13 @@ public interface SpecificationService {
 	/**
 	 * 增加
 	*/
-	public void add(TbSpecification specification);
+	public void add(Specification specification);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(TbSpecification specification);
+	public void update(Specification specification);
 	
 
 	/**
@@ -41,7 +44,7 @@ public interface SpecificationService {
 	 * @param id
 	 * @return
 	 */
-	public TbSpecification findOne(Long id);
+	public Specification findOne(Long id);
 	
 	
 	/**
@@ -57,5 +60,11 @@ public interface SpecificationService {
 	 * @return
 	 */
 	public PageResult findPage(TbSpecification specification, int pageNum, int pageSize);
+
+	/**
+	 * 下拉规格选项框
+	 * @return
+	 */
+	List<Map> selectOptionList();
 	
 }
