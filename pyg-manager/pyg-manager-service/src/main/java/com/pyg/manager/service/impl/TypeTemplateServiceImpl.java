@@ -1,5 +1,6 @@
 package com.pyg.manager.service.impl;
 import java.util.List;
+import java.util.Map;
 
 import com.pyg.pojo.TbTypeTemplateExample;
 import com.pyg.utils.PageResult;
@@ -104,5 +105,10 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 		Page<TbTypeTemplate> page= (Page<TbTypeTemplate>)typeTemplateMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	@Override
+	public List<Map> selectOptionList() {
+		return typeTemplateMapper.selectOptionList();
+	}
+
 }

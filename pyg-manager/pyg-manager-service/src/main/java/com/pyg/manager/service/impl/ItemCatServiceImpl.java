@@ -74,6 +74,24 @@ public class ItemCatServiceImpl implements ItemCatService {
 	public void delete(Long[] ids) {
 		for(Long id:ids){
 			itemCatMapper.deleteByPrimaryKey(id);
+
+			TbItemCatExample example = new TbItemCatExample();
+			TbItemCatExample.Criteria criteria = example.createCriteria();
+			criteria.andParentIdEqualTo(id);
+			List<TbItemCat> tbItemCats = itemCatMapper.selectByExample(example);
+
+
+			TbItemCatExample example2 = new TbItemCatExample();
+			TbItemCatExample.Criteria criteria2 = example2.createCriteria();
+			criteria2.andParentIdEqualTo(id);
+			itemCatMapper.deleteByExample(example2);
+
+			for (TbItemCat itemCat : tbItemCats) {
+				TbItemCatExample example1 = new TbItemCatExample();
+				TbItemCatExample.Criteria criteria1 = example1.createCriteria();
+				criteria1.andParentIdEqualTo(itemCat.getId());
+				itemCatMapper.deleteByExample(example1);
+			}
 		}		
 	}
 	
@@ -95,5 +113,15 @@ public class ItemCatServiceImpl implements ItemCatService {
 		Page<TbItemCat> page= (Page<TbItemCat>)itemCatMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	@Override
+	public List<TbItemCat> findByParentId(Long parentId) {
+
+		TbItemCatExample example = new TbItemCatExample();
+		TbItemCatExample.Criteria criteria = example.createCriteria();
+		criteria.andParentIdEqualTo(parentId);
+
+		return itemCatMapper.selectByExample(example);
+	}
+
 }
