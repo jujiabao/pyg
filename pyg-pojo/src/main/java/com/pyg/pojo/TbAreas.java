@@ -1,6 +1,8 @@
 package com.pyg.pojo;
 
-public class TbAreas {
+import java.io.Serializable;
+
+public class TbAreas implements Serializable {
     private Integer id;
 
     private String areaid;

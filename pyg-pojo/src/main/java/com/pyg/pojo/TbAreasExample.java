@@ -1,9 +1,10 @@
 package com.pyg.pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TbAreasExample {
+public class TbAreasExample implements Serializable {
     protected String orderByClause;
 
     protected boolean distinct;

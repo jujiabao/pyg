@@ -1,7 +1,9 @@
 package com.pyg.manager.service.impl;
 import java.util.List;
 
+import com.pyg.mapper.TbGoodsDescMapper;
 import com.pyg.pojo.TbGoodsExample;
+import com.pyg.pojogroup.Goods;
 import com.pyg.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -21,6 +23,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private TbGoodsMapper goodsMapper;
+
+	@Autowired
+	private TbGoodsDescMapper goodsDescMapper;
 	
 	/**
 	 * 查询全部
@@ -44,8 +49,12 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 增加
 	 */
 	@Override
-	public void add(TbGoods goods) {
-		goodsMapper.insert(goods);		
+	public void add(Goods goods) {
+		goods.getGoods().setAuditStatus("0");//状态未审核
+		goodsMapper.insert(goods.getGoods());//插入商品基本信息
+
+		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());//商品基本ID给描述表
+		goodsDescMapper.insert(goods.getGoodsDesc());
 	}
 
 	

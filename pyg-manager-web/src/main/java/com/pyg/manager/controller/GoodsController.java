@@ -40,22 +40,7 @@ public class GoodsController {
 	public PageResult findPage(int page, int rows){
 		return goodsService.findPage(page, rows);
 	}
-	
-	/**
-	 * 增加
-	 * @param goods
-	 * @return
-	 */
-	@RequestMapping("/add")
-	public PygResult add(@RequestBody TbGoods goods){
-		try {
-			goodsService.add(goods);
-			return new PygResult(true, "增加成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new PygResult(false, "增加失败");
-		}
-	}
+
 	
 	/**
 	 * 修改

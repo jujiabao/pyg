@@ -1,6 +1,8 @@
 package com.pyg.pojo;
 
-public class TbContent {
+import java.io.Serializable;
+
+public class TbContent implements Serializable {
     private Long id;
 
     private Long categoryId;

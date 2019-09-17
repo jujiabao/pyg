@@ -58,6 +58,12 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.jujiabao</groupId>
+            <artifactId>pyg-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- dubbo相关 -->
         <dependency>
             <groupId>com.alibaba</groupId>

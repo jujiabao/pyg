@@ -1,6 +1,8 @@
 package com.pyg.pojo;
 
-public class TbProvinces {
+import java.io.Serializable;
+
+public class TbProvinces implements Serializable {
     private Integer id;
 
     private String provinceid;

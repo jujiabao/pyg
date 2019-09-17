@@ -3,6 +3,7 @@ package com.pyg.mapper;
 import com.pyg.pojo.TbGoods;
 import com.pyg.pojo.TbGoodsExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TbGoodsMapper {
@@ -12,7 +13,7 @@ public interface TbGoodsMapper {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(TbGoods record);
+    int insert(TbGoods goods);
 
     int insertSelective(TbGoods record);
 
