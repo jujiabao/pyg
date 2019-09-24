@@ -2,6 +2,10 @@ package com.pyg.manager.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+import com.pyg.mapper.TbSpecificationOptionMapper;
+import com.pyg.pojo.TbSpecificationOption;
+import com.pyg.pojo.TbSpecificationOptionExample;
 import com.pyg.pojo.TbTypeTemplateExample;
 import com.pyg.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 	@Autowired
 	private TbTypeTemplateMapper typeTemplateMapper;
+
+	@Autowired
+	private TbSpecificationOptionMapper specificationOptionMapper;
 	
 	/**
 	 * 查询全部
@@ -109,6 +116,21 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	@Override
 	public List<Map> selectOptionList() {
 		return typeTemplateMapper.selectOptionList();
+	}
+
+
+	@Override
+	public List<Map> findSpecList(Long id) {
+		TbTypeTemplate tbTypeTemplate = typeTemplateMapper.selectByPrimaryKey(id);
+		List<Map> mapList = JSON.parseArray(tbTypeTemplate.getSpecIds(), Map.class);
+		for (Map map : mapList) {
+			TbSpecificationOptionExample tbSpecificationOptionExample = new TbSpecificationOptionExample();
+			TbSpecificationOptionExample.Criteria criteria = tbSpecificationOptionExample.createCriteria();
+			criteria.andSpecIdEqualTo(new Long((Integer)map.get("id")));
+			List<TbSpecificationOption> options = specificationOptionMapper.selectByExample(tbSpecificationOptionExample);
+			map.put("options", options);
+		}
+		return mapList;
 	}
 
 }

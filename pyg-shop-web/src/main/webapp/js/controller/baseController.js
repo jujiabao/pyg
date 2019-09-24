@@ -40,5 +40,17 @@ app.controller("baseController", function ($scope) {
         return value;
     };
 
+    //遍历集合，查询对象中某个属性值
+    $scope.searchObjectKey = function (list, key, value) {
+        for (var i=0; i<list.length; i++) {
+            var obj = list[i];
+            if (obj[key] == value) {
+                return list[i];
+            }
+        };
+        return null;
+    }
+    
+
 
 });

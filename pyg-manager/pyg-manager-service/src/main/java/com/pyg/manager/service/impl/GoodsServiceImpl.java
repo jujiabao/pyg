@@ -1,16 +1,18 @@
 package com.pyg.manager.service.impl;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.pyg.mapper.TbGoodsDescMapper;
-import com.pyg.pojo.TbGoodsExample;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.pyg.mapper.*;
+import com.pyg.pojo.*;
 import com.pyg.pojogroup.Goods;
 import com.pyg.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pyg.mapper.TbGoodsMapper;
-import com.pyg.pojo.TbGoods;
 import com.pyg.manager.service.GoodsService;
 
 /**
@@ -45,6 +47,18 @@ public class GoodsServiceImpl implements GoodsService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+	@Autowired
+	private TbItemMapper itemMapper;
+
+	@Autowired
+	private TbItemCatMapper itemCatMapper;
+
+	@Autowired
+	private TbBrandMapper brandMapper;
+
+	@Autowired
+	private TbSellerMapper sellerMapper;
+
 	/**
 	 * 增加
 	 */
@@ -55,9 +69,62 @@ public class GoodsServiceImpl implements GoodsService {
 
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());//商品基本ID给描述表
 		goodsDescMapper.insert(goods.getGoodsDesc());
+
+		if ("1".equals(goods.getGoods().getIsEnableSpec())) {
+
+			for (TbItem tbItem : goods.getItemList()) {
+				String title = goods.getGoods().getGoodsName();//SPU名称
+				Map<String, Object> map = JSON.parseObject(tbItem.getSpec());
+				for (String s : map.keySet()) {
+					title += " " + map.get(s);
+				}
+				tbItem.setTitle(title);
+				setItemValues(goods, tbItem);//抽取公共方法
+
+				itemMapper.insert(tbItem);
+			}
+		} else {
+			TbItem tbItem = new TbItem();
+			tbItem.setTitle(goods.getGoods().getGoodsName());
+			tbItem.setPrice(goods.getGoods().getPrice());
+			tbItem.setNum(9999);
+			tbItem.setStatus("1");
+			tbItem.setIsDefault("1");
+			tbItem.setSpec("{}");
+			setItemValues(goods, tbItem);
+			itemMapper.insert(tbItem);
+		}
 	}
 
-	
+	private void setItemValues(Goods goods, TbItem tbItem) {
+		//商品分类
+		tbItem.setCategoryid(goods.getGoods().getCategory3Id());
+		tbItem.setCreateTime(new Date());
+		tbItem.setUpdateTime(new Date());
+
+		tbItem.setGoodsId(goods.getGoods().getId());//商品ID
+		tbItem.setSellerId(goods.getGoods().getSellerId());//商家ID
+
+		//分类名称
+		TbItemCat itemCat = itemCatMapper.selectByPrimaryKey(goods.getGoods().getCategory3Id());
+		tbItem.setCategory(itemCat.getName());
+
+		//品牌名称
+		TbBrand tbBrand = brandMapper.selectByPrimaryKey(goods.getGoods().getBrandId());
+		tbItem.setBrand(tbBrand.getName());
+
+		//商家名称
+		TbSeller tbSeller = sellerMapper.selectByPrimaryKey(goods.getGoods().getSellerId());
+		tbItem.setSeller(tbSeller.getNickName());
+
+		//照片信息
+		List<Map> imageList = JSON.parseArray(goods.getGoodsDesc().getItemImages(), Map.class);
+		if (imageList.size() > 0) {
+			tbItem.setImage((String) imageList.get(0).get("url"));
+		}
+	}
+
+
 	/**
 	 * 修改
 	 */
