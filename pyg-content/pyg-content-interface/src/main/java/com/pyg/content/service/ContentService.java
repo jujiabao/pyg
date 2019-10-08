@@ -1,21 +1,20 @@
-package com.pyg.manager.service;
+package com.pyg.content.service;
 import java.util.List;
-import com.pyg.pojo.TbGoods;
-import com.pyg.pojogroup.Goods;
-import com.pyg.utils.PageResult;
+import com.pyg.pojo.TbContent;
 
+import com.pyg.utils.PageResult;
 /**
  * 服务层接口
  * @author Administrator
  *
  */
-public interface GoodsService {
+public interface ContentService {
 
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
-	public List<TbGoods> findAll();
+	public List<TbContent> findAll();
 	
 	
 	/**
@@ -28,13 +27,13 @@ public interface GoodsService {
 	/**
 	 * 增加
 	*/
-	public void add(Goods goods);
+	public void add(TbContent content);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(Goods goods);
+	public void update(TbContent content);
 	
 
 	/**
@@ -42,7 +41,7 @@ public interface GoodsService {
 	 * @param id
 	 * @return
 	 */
-	public Goods findOne(Long id);
+	public TbContent findOne(Long id);
 	
 	
 	/**
@@ -57,13 +56,6 @@ public interface GoodsService {
 	 * @param pageSize 每页记录数
 	 * @return
 	 */
-	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
-
-	/**
-	 * 修改状态
-	 * @param ids
-	 * @param status
-	 */
-	void updateStatus(Long[] ids, String status);
+	public PageResult findPage(TbContent content, int pageNum, int pageSize);
 	
 }

@@ -1,15 +1,14 @@
 package com.pyg.manager.controller;
 import java.util.List;
 
-import com.pyg.pojogroup.Goods;
 import com.pyg.utils.PageResult;
 import com.pyg.utils.PygResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.pyg.pojo.TbGoods;
-import com.pyg.manager.service.GoodsService;
+import com.pyg.pojo.TbContentCategory;
+import com.pyg.content.service.ContentCategoryService;
 
 /**
  * controller
@@ -17,19 +16,19 @@ import com.pyg.manager.service.GoodsService;
  *
  */
 @RestController
-@RequestMapping("/goods")
-public class GoodsController {
+@RequestMapping("/contentCategory")
+public class ContentCategoryController {
 
 	@Reference
-	private GoodsService goodsService;
+	private ContentCategoryService contentCategoryService;
 	
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
 	@RequestMapping("/findAll")
-	public List<TbGoods> findAll(){			
-		return goodsService.findAll();
+	public List<TbContentCategory> findAll(){			
+		return contentCategoryService.findAll();
 	}
 	
 	
@@ -39,19 +38,34 @@ public class GoodsController {
 	 */
 	@RequestMapping("/findPage")
 	public PageResult findPage(int page, int rows){
-		return goodsService.findPage(page, rows);
+		return contentCategoryService.findPage(page, rows);
 	}
-
+	
+	/**
+	 * 增加
+	 * @param contentCategory
+	 * @return
+	 */
+	@RequestMapping("/add")
+	public PygResult add(@RequestBody TbContentCategory contentCategory){
+		try {
+			contentCategoryService.add(contentCategory);
+			return new PygResult(true, "增加成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new PygResult(false, "增加失败");
+		}
+	}
 	
 	/**
 	 * 修改
-	 * @param goods
+	 * @param contentCategory
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public PygResult update(@RequestBody Goods goods){
+	public PygResult update(@RequestBody TbContentCategory contentCategory){
 		try {
-			goodsService.update(goods);
+			contentCategoryService.update(contentCategory);
 			return new PygResult(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,8 +79,8 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public Goods findOne(Long id){
-		return goodsService.findOne(id);		
+	public TbContentCategory findOne(Long id){
+		return contentCategoryService.findOne(id);		
 	}
 	
 	/**
@@ -77,8 +91,8 @@ public class GoodsController {
 	@RequestMapping("/delete")
 	public PygResult delete(Long [] ids){
 		try {
-			goodsService.delete(ids);
-			return new PygResult(true, "删除成功");
+			contentCategoryService.delete(ids);
+			return new PygResult(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new PygResult(false, "删除失败");
@@ -87,30 +101,13 @@ public class GoodsController {
 	
 		/**
 	 * 查询+分页
-	 * @param
 	 * @param page
 	 * @param rows
 	 * @return
 	 */
 	@RequestMapping("/search")
-	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
-		return goodsService.findPage(goods, page, rows);		
-	}
-
-	/**
-	 * 修改状态
-	 * @param ids
-	 * @param status
-	 * @return
-	 */
-	@RequestMapping("/updateStatus")
-	public PygResult updateStatus(Long[] ids, String status) {
-		try {
-			goodsService.updateStatus(ids, status);
-			return new PygResult(true, "成功");
-		} catch (Exception e) {
-			return new PygResult(false, "失败");
-		}
+	public PageResult search(@RequestBody TbContentCategory contentCategory, int page, int rows  ){
+		return contentCategoryService.findPage(contentCategory, page, rows);		
 	}
 	
 }
