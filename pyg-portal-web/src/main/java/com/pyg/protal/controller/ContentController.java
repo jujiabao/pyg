@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
 /**
  * @Title ContentController
  * @ProjectName pyg
@@ -22,8 +21,10 @@ public class ContentController {
     @Reference
     private ContentService contentService;
 
+
     @RequestMapping("/findByCategoryId")
     public List<TbContent> findByCategoryId(Long id) {
         return contentService.findByCategoryId(id);
     }
+
 }
