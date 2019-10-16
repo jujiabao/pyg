@@ -1,4 +1,4 @@
-app.controller("searchController", function ($scope, searchService) {
+app.controller("searchController", function ($scope, searchService, $location) {
 
     $scope.searchMap = {
         "keywords": "",
@@ -8,7 +8,9 @@ app.controller("searchController", function ($scope, searchService) {
         "price": "",
         "pageNo": 1,
         "redictPageNo": "",
-        "pageSize": 40
+        "pageSize": 40,
+        "sort": "",
+        "sortField": ""
     }
 
     $scope.search = function () {
@@ -65,6 +67,26 @@ app.controller("searchController", function ($scope, searchService) {
             return;
         }
         $scope.searchMap.pageNo = pageNo;
+        $scope.search();
+    }
+    
+    $scope.sortSearch = function (sortValue, sortField) {
+        $scope.searchMap.sort = sortValue;
+        $scope.searchMap.sortField = sortField;
+        $scope.search();
+    }
+
+    $scope.keywordsIsBrand = function () {
+        for (var i = 0; i<$scope.resultMap.brandList.length; i++) {
+            if ($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //加载关键字
+    $scope.loadkeywords = function () {
+        $scope.searchMap.keywords = $location.search()["keywords"];
         $scope.search();
     }
 })

@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/controller/searchController.js"></script>
 </head>
 
-<body ng-app="pyg" ng-controller="searchController">
+<body ng-app="pyg" ng-controller="searchController" ng-init="loadkeywords()">
 <!-- 头部栏位 -->
 <!--页面顶部-->
 <div id="nav-bottom">
@@ -149,6 +149,7 @@
             <ul class="fl sui-breadcrumb">
                 <li>
                     <a href="#">搜索条件</a>
+                    {{searchMap}}
                 </li>
             </ul>
             <ul class="tags-choose">
@@ -171,7 +172,7 @@
                 </div>
                 <div class="fl ext"></div>
             </div>
-            <div class="type-wrap logo" ng-if="resultMap.brandList != null && searchMap.brand == ''">
+            <div class="type-wrap logo" ng-if="resultMap.brandList != null && searchMap.brand == '' && keywordsIsBrand() == false">
                 <div class="fl key brand">品牌</div>
                 <div class="value logos">
                     <ul class="logo-list">
@@ -251,20 +252,23 @@
             <div class="sui-navbar">
                 <div class="navbar-inner filter">
                     <ul class="sui-nav">
-                        <li class="active">
-                            <a href="#">综合</a>
+                        <li class="{{searchMap.sortField==''?'active':''}}">
+                            <a href="#" ng-click="sortSearch('','')">综合</a>
                         </li>
-                        <li>
+                        <li class="{{searchMap.sortField=='1'?'active':''}}">
                             <a href="#">销量</a>
                         </li>
-                        <li>
+                        <li class="{{searchMap.sortField=='2'?'active':''}}">
                             <a href="#">新品</a>
                         </li>
-                        <li>
+                        <li class="{{searchMap.sortField=='3'?'active':''}}">
                             <a href="#">评价</a>
                         </li>
-                        <li>
-                            <a href="#">价格</a>
+                        <li class="{{searchMap.sortField=='price'&&searchMap.sort=='ASC'?'active':''}}">
+                            <a href="#" ng-click="sortSearch('ASC','price')">价格⤴️</a>
+                        </li>
+                        <li class="{{searchMap.sortField=='price'&&searchMap.sort=='DESC'?'active':''}}">
+                            <a href="#" ng-click="sortSearch('DESC','price')">价格⬇️</a>
                         </li>
                     </ul>
                 </div>
@@ -274,7 +278,7 @@
                     <li class="yui3-u-1-5" ng-repeat="item in resultMap.rows">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <a href="item.html" target="_blank"><img src="{{item.image}}"/></a>
+                                <a href="http://localhost:9105/{{item.goodsId}}.html#?itemId={{item.id}}" target="_blank"><img src="{{item.image}}"/></a>
                             </div>
                             <div class="price">
                                 <strong>

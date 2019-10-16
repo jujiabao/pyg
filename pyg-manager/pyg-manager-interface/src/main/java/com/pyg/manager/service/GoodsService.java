@@ -1,6 +1,7 @@
 package com.pyg.manager.service;
 import java.util.List;
 import com.pyg.pojo.TbGoods;
+import com.pyg.pojo.TbItem;
 import com.pyg.pojogroup.Goods;
 import com.pyg.utils.PageResult;
 
@@ -65,5 +66,13 @@ public interface GoodsService {
 	 * @param status
 	 */
 	void updateStatus(Long[] ids, String status);
+
+	/**
+	 * 根据SPU的ID集合查询SKU列表
+	 * @param ids
+	 * @param status
+	 * @return
+	 */
+	List<TbItem> findItemListByGoodsIdListAndStatus(Long[] ids, String status);
 	
 }

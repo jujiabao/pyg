@@ -1,5 +1,6 @@
 package com.pyg.search.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,4 +18,16 @@ public interface ItemSearchService {
      * @return
      */
     Map search(Map searchMap);
+
+    /**
+     * 导入列表功能
+     * @param list
+     */
+    void importList(List list);
+
+    /**
+     * 删除商品列表
+     * @param goodsIds（spu）
+     */
+    void deleteByGoodsIds(List goodsIds);
 }

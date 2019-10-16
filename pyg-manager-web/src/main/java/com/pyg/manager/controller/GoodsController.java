@@ -1,7 +1,11 @@
 package com.pyg.manager.controller;
+import java.util.Arrays;
 import java.util.List;
 
+import com.pyg.page.service.ItemPageService;
+import com.pyg.pojo.TbItem;
 import com.pyg.pojogroup.Goods;
+import com.pyg.search.service.ItemSearchService;
 import com.pyg.utils.PageResult;
 import com.pyg.utils.PygResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +26,12 @@ public class GoodsController {
 
 	@Reference
 	private GoodsService goodsService;
-	
+
+	@Reference(timeout = 7000)
+	private ItemSearchService itemSearchService;
+
+	@Reference
+	private ItemPageService itemPageService;
 	/**
 	 * 返回全部列表
 	 * @return
@@ -78,6 +87,8 @@ public class GoodsController {
 	public PygResult delete(Long [] ids){
 		try {
 			goodsService.delete(ids);
+			//从solr库删除
+			itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
 			return new PygResult(true, "删除成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,10 +118,24 @@ public class GoodsController {
 	public PygResult updateStatus(Long[] ids, String status) {
 		try {
 			goodsService.updateStatus(ids, status);
+			if ("1".equals(status)) {
+				//需要导入solr的数据
+				List<TbItem> list = goodsService.findItemListByGoodsIdListAndStatus(ids, status);
+				itemSearchService.importList(list);
+				//生成商品详细页
+				for (Long goodsId : ids) {
+					itemPageService.genItemHtml(goodsId);
+				}
+			}
 			return new PygResult(true, "成功");
 		} catch (Exception e) {
 			return new PygResult(false, "失败");
 		}
 	}
+
+	/*@RequestMapping("/gen")
+	public void genHtml(Long goodsId) {
+		itemPageService.genItemHtml(goodsId);
+	}*/
 	
 }

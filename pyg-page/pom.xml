@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>pyg-parent</artifactId>
+        <groupId>com.jujiabao</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pyg-parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>pyg-page</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>pyg-page-interface</module>
+        <module>pyg-page-service</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jujiabao</groupId>
+            <artifactId>pyg-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 配置Tomcat插件 -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <!-- 服务启动端口:从9000开始 -->
+                    <port>9005</port>
+                    <!-- /把项目发布tomcat服务器ROOT目录下.-->
+                    <path>/</path>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

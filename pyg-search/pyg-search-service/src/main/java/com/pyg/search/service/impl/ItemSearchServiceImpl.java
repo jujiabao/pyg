@@ -7,6 +7,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -48,6 +49,10 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return map;*/
 
         Map map = new HashedMap();
+        //去掉关键字空格
+        String keywords = (String) searchMap.get("keywords");
+        searchMap.put("keywords", keywords.replace(" ", ""));
+
         //查询列表
         map.putAll(searchList(searchMap));
 
@@ -66,6 +71,24 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
         return map;
+    }
+
+    @Override
+    public void importList(List list) {
+
+        solrTemplate.saveBeans(list);
+        solrTemplate.commit();
+
+    }
+
+    @Override
+    public void deleteByGoodsIds(List goodsIds) {
+        SolrDataQuery query = new SimpleQuery("*:*");
+        Criteria criteria = new Criteria("item_goodsid");
+        criteria.in(goodsIds);
+        query.addCriteria(criteria);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
     }
 
     //查询列表
@@ -131,9 +154,23 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         if (pageSize == null) {
             pageSize = 20;
         }
-
         query.setOffset((pageNo - 1) * pageSize);
         query.setRows(pageSize);
+
+        //1.7排序
+        String sortValue = (String) searchMap.get("sort");
+        String sortField = (String) searchMap.get("sortField");
+
+        if (sortValue != null && !"".equals(sortValue)) {
+            if ("ASC".equals(sortValue)) {
+                Sort sort = new Sort(Sort.Direction.ASC, "item_"+sortField);
+                query.addSort(sort);
+            }
+            if ("DESC".equals(sortValue)) {
+                Sort sort = new Sort(Sort.Direction.DESC, "item_"+sortField);
+                query.addSort(sort);
+            }
+        }
 
         HighlightPage<TbItem> items = solrTemplate.queryForHighlightPage(query, TbItem.class);
         //高亮入口集合
