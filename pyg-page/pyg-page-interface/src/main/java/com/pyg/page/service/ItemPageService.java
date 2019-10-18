@@ -15,4 +15,11 @@ public interface ItemPageService {
      * @return
      */
     boolean genItemHtml(Long goodsId);
+
+    /**
+     * 删除页面
+     * @param goodsId
+     * @return
+     */
+    boolean deleteHtml(Long goodsId);
 }

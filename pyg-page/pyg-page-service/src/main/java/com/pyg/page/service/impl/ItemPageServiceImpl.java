@@ -1,6 +1,5 @@
 package com.pyg.page.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.pyg.mapper.TbGoodsDescMapper;
 import com.pyg.mapper.TbGoodsMapper;
 import com.pyg.mapper.TbItemCatMapper;
@@ -14,8 +13,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ import java.util.Map;
  * @Author Hello.Ju
  * @Date 2019-10-15 22:20
  */
-@Service(timeout = 15000)
+@Service
 public class ItemPageServiceImpl implements ItemPageService {
 
     @Autowired
@@ -87,5 +88,15 @@ public class ItemPageServiceImpl implements ItemPageService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean deleteHtml(Long goodsId) {
+        File file = new File(pageDir + goodsId + ".html");
+        if(file.exists()) {
+            return file.delete();
+        } else {
+            return true;
+        }
     }
 }

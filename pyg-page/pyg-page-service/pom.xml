@@ -46,11 +46,11 @@
             <artifactId>spring-test</artifactId>
         </dependency>
         <!-- dubbo相关 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
             <exclusions>
-                <!-- 新dubbo引入，若不排除，tomcat7插件启动会报错，原因是这个jar冲突 -->
+                &lt;!&ndash; 新dubbo引入，若不排除，tomcat7插件启动会报错，原因是这个jar冲突 &ndash;&gt;
                 <exclusion>
                     <artifactId>javax.servlet-api</artifactId>
                     <groupId>javax.servlet</groupId>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.jujiabao</groupId>
             <artifactId>pyg-page-interface</artifactId>
@@ -74,6 +74,16 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.13.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.13</version>
         </dependency>
     </dependencies>
 </project>

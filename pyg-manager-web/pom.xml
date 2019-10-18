@@ -95,16 +95,18 @@
             <artifactId>pyg-content-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- solr服务-用于增量数据导入 -->
-        <dependency>
-            <groupId>com.jujiabao</groupId>
-            <artifactId>pyg-search-interface</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
+
+        <!-- mq代替 -->
+        <!--<dependency>
             <groupId>com.jujiabao</groupId>
             <artifactId>pyg-page-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.13.4</version>
         </dependency>
     </dependencies>
     <build>

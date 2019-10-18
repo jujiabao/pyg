@@ -10,14 +10,14 @@
 
 	<context:property-placeholder location="classpath:properties/page.properties" ignore-unresolvable="true"/>
 
-	<!-- 指定dubbo发布服务端口 -->
+	<!--&lt;!&ndash; 指定dubbo发布服务端口 &ndash;&gt;
     <dubbo:protocol name="dubbo" port="20885"></dubbo:protocol>
-	<!-- 指定服务名称 -->
+	&lt;!&ndash; 指定服务名称 &ndash;&gt;
 	<dubbo:application name="pyg-page-service"/>
-	<!-- 指定服务注册中心地址 -->
+	&lt;!&ndash; 指定服务注册中心地址 &ndash;&gt;
     <dubbo:registry address="zookeeper://localhost:2181"/>
-	<!-- 注解方式发布服务 -->
-    <dubbo:annotation package="com.pyg.page.service.impl" />
+	&lt;!&ndash; 注解方式发布服务 &ndash;&gt;
+    <dubbo:annotation package="com.pyg.page.service.impl" />-->
 
 	<bean id="freemarkerConfig"	class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="templateLoaderPath" value="/WEB-INF/ftl/" />
