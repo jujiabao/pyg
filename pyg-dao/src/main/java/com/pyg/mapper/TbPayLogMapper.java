@@ -10,7 +10,7 @@ public interface TbPayLogMapper {
 
     int deleteByExample(TbPayLogExample example);
 
-    int deleteByPrimaryKey(String outTradeNo);
+    int deleteByPrimaryKey(Long outTradeNo);
 
     int insert(TbPayLog record);
 
@@ -18,7 +18,7 @@ public interface TbPayLogMapper {
 
     List<TbPayLog> selectByExample(TbPayLogExample example);
 
-    TbPayLog selectByPrimaryKey(String outTradeNo);
+    TbPayLog selectByPrimaryKey(Long outTradeNo);
 
     int updateByExampleSelective(@Param("record") TbPayLog record, @Param("example") TbPayLogExample example);
 
