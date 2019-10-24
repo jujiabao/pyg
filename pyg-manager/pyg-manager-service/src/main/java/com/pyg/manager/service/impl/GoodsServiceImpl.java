@@ -121,7 +121,7 @@ public class GoodsServiceImpl implements GoodsService {
         tbItem.setBrand(tbBrand.getName());
 
         //商家名称
-        TbSeller tbSeller = sellerMapper.selectByPrimaryKey(goods.getGoods().getSellerId());
+        TbSeller tbSeller = sellerMapper.selectByPrimaryKey(Long.parseLong(goods.getGoods().getSellerId()));
         tbItem.setSeller(tbSeller.getNickName());
 
         //照片信息

@@ -67,7 +67,7 @@ public class SellerServiceImpl implements SellerService {
 	 */
 	@Override
 	public TbSeller findOne(String id){
-		return sellerMapper.selectByPrimaryKey(id);
+		return sellerMapper.selectByPrimaryKey(Long.parseLong(id));
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public void delete(String[] ids) {
 		for(String id:ids){
-			sellerMapper.deleteByPrimaryKey(id);
+			sellerMapper.deleteByPrimaryKey(Long.parseLong(id));
 		}		
 	}
 	
@@ -164,7 +164,7 @@ public class SellerServiceImpl implements SellerService {
 
 	@Override
 	public void updateStatus(String sellerId, String status) {
-		TbSeller tbSeller = sellerMapper.selectByPrimaryKey(sellerId);
+		TbSeller tbSeller = sellerMapper.selectByPrimaryKey(Long.parseLong(sellerId));
 		tbSeller.setStatus(status);
 		sellerMapper.updateByPrimaryKey(tbSeller);
 	}
