@@ -57,5 +57,6 @@ public interface AddressService {
 	 * @return
 	 */
 	public PageResult findPage(TbAddress address, int pageNum, int pageSize);
-	
+
+	List<TbAddress> findListByUserId(String username);
 }

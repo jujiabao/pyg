@@ -8,6 +8,7 @@ import com.pyg.utils.CookieUtil;
 import com.pyg.utils.PygResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,7 @@ public class CartController {
     private HttpServletResponse response;
 
     @RequestMapping("/addGoods2CartList")
+    @CrossOrigin(origins = "http://localhost:9105", allowCredentials = "true")//允许该服务的跨域请求
     public PygResult addGoods2CartList(Long itemId, Integer num) {
         //当前登录人账号
         String name = SecurityContextHolder.getContext().getAuthentication().getName();

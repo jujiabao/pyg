@@ -1,10 +1,10 @@
-app.controller("itemController", function ($scope, $location) {
+app.controller("itemController", function ($scope, $location, $http) {
     $scope.num = 1;
 
     $scope.specificationItems = {};//存储用户选择的规则
-    
+
     $scope.addNum = function (x) {
-        $scope.num+=x;
+        $scope.num += x;
         if ($scope.num < 1) {
             $scope.num = 1;
         }
@@ -30,7 +30,7 @@ app.controller("itemController", function ($scope, $location) {
     $scope.loadSku = function () {
         $scope.sku = skuList[0];
         var itemId = $location.search()["itemId"];
-        for (var i=0; i<skuList.length; i++) {
+        for (var i = 0; i < skuList.length; i++) {
             if (skuList[i]["id"] == itemId) {
                 $scope.sku = skuList[i];
                 $scope.specificationItems = JSON.parse(JSON.stringify(JSON.parse($scope.sku.spec)));//深克隆
@@ -57,17 +57,28 @@ app.controller("itemController", function ($scope, $location) {
 
     //根据选择的查询sku
     searchSku = function () {
-        for (var i=0; i<skuList.length; i++) {
+        for (var i = 0; i < skuList.length; i++) {
             if (matchObject(JSON.parse(skuList[i].spec), $scope.specificationItems)) {
                 $scope.sku = skuList[i];
                 return;
             }
         }
     }
-    
+
     //加入购物车
     $scope.addToCat = function () {
-        alert($scope.sku.id);
+        $http.get('http://localhost:9107/cart/addGoods2CartList.do?itemId='
+            + $scope.sku.id + '&num=' + $scope.num, {'withCredentials': true}).success(
+            function (response) {
+                if (response.success) {
+                    location.href = "http://localhost:9107/cart.html";
+                } else {
+                    alert("加入购物车失败");
+                }
+            }
+        ).error(function () {
+            alert("请求失败")
+        });
     }
 
 });
