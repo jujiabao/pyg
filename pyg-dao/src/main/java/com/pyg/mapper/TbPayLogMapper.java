@@ -18,7 +18,7 @@ public interface TbPayLogMapper {
 
     List<TbPayLog> selectByExample(TbPayLogExample example);
 
-    TbPayLog selectByPrimaryKey(Long outTradeNo);
+    TbPayLog selectByPrimaryKey(String outTradeNo);
 
     int updateByExampleSelective(@Param("record") TbPayLog record, @Param("example") TbPayLogExample example);
 

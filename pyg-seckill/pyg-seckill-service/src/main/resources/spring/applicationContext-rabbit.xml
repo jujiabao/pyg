@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+
+    <!-- 配置连接工厂 -->
+    <rabbit:connection-factory id="connectionFactory" host="127.0.0.1" port="5672" username="guest" password="guest"/>
+
+    <!-- 定义mq管理 -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- 声明队列 -->
+    <rabbit:queue name="pyg_seckill_queue" auto-declare="true" durable="true"/>
+
+    <!-- 定义消费者 -->
+    <bean name="seckillMsgConsumer" class="com.pyg.seckill.listener.SeckillMsgConsumer"/>
+
+    <!-- 定义消费者监听队列 -->
+    <rabbit:listener-container
+            connection-factory="connectionFactory">
+        <rabbit:listener ref="seckillMsgConsumer" queues="pyg_seckill_queue"/>
+    </rabbit:listener-container>
+</beans>

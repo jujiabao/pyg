@@ -66,7 +66,7 @@ public class PayLogServiceImpl implements PayLogService {
      */
     @Override
     public TbPayLog findOne(Long id) {
-        return payLogMapper.selectByPrimaryKey(id);
+        return payLogMapper.selectByPrimaryKey(id+"");
     }
 
     /**
