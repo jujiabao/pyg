@@ -36,6 +36,12 @@ public class CartController {
     @Autowired
     private HttpServletResponse response;
 
+    /**
+     * 实现跨域请求
+     * @param itemId
+     * @param num
+     * @return
+     */
     @RequestMapping("/addGoods2CartList")
     @CrossOrigin(origins = "http://localhost:9105", allowCredentials = "true")//允许该服务的跨域请求
     public PygResult addGoods2CartList(Long itemId, Integer num) {

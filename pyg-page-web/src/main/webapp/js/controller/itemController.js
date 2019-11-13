@@ -67,6 +67,7 @@ app.controller("itemController", function ($scope, $location, $http) {
 
     //加入购物车
     $scope.addToCat = function () {
+        //跨域请求实现
         $http.get('http://localhost:9107/cart/addGoods2CartList.do?itemId='
             + $scope.sku.id + '&num=' + $scope.num, {'withCredentials': true}).success(
             function (response) {
